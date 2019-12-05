@@ -1,0 +1,37 @@
+// ----------------------------------------------------------------------------------------------------------------------------------------------------
+// Notes:
+// - mat-typography-level   params:  font size, line height/font size, font weight(default 400), font family(default null), letter spacing(default null)
+//
+// - Create a separate file for global sass vars. ....
+//    https://stackoverflow.com/questions/53007605/how-to-include-custom-material-themes-into-components-without-duplicating-mixins
+// ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Theme definition is here. Include this within components that require theme variables like color.
+@import 'partials/theme';
+
+
+// required mat-core mixin .... using defined typography
+$app-typography: mat-typography-config(
+  /*$font-family: 'Muli, Roboto, "Helvetica Neue", sans-serif',*/
+  $font-family: 'Roboto, sans-serif',
+  $display-4:     mat-typography-level(112px, 112px, 300),
+  $display-3:     mat-typography-level(56px, 56px, 400),
+  $display-2:     mat-typography-level(45px, 48px, 400),
+  $display-1:     mat-typography-level(34px, 40px, 400),
+  $headline:      mat-typography-level(24px, 32px, 400),
+  $title:         mat-typography-level(20px, 32px, 500),
+  $subheading-2:  mat-typography-level(16px, 28px, 400),
+  $subheading-1:  mat-typography-level(15px, 24px, 400),
+  $body-2:        mat-typography-level(14px, 24px, 500),
+  $body-1:        mat-typography-level(14px, 20px, 400),
+  $caption:       mat-typography-level(12px, 20px, 400),
+  $button:        mat-typography-level(14px, 14px, 500),
+  // Line-height must be unit-less fraction of the font-size.
+  /*$input:         mat-typography-level(16px, 1.25, 400)*/
+  $input:         mat-typography-level(inherit, 1.125, 400)
+);
+@include mat-core($app-typography);
+
+
+// the declaration of our custom material theme
+@include angular-material-theme($patty-theme);

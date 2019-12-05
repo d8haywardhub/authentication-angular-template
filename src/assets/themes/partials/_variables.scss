@@ -1,0 +1,27 @@
+// global variables like fonts and colors
+
+// Sass color vars ( available in all areas of project )
+$primary-light: mat-color($patty-theme-primary, 200);
+$primary: mat-color($patty-theme-primary);
+$primary-dark: mat-color($patty-theme-primary, 900);
+
+$accent-light: mat-color($patty-theme-accent, 200);
+$accent: mat-color($patty-theme-accent);
+$accent-dark: mat-color($patty-theme-accent, 900);
+
+$warn: mat-color($patty-theme-warn);
+$warn-light: mat-color($patty-theme-warn, 200);
+$warn-dark: mat-color($patty-theme-warn, 900);
+
+// Style Guide Specifics
+$tree-pane-background: #3c4459;
+$text-colour: #3c4459;
+$inactive: #b7b7b7;
+$footer-grey: #909399;
+$background: #f8f8f8;
+$tree-incomplete: #ffd200;
+$complete: $accent;
+$incomplete: $warn-light;
+$card-background: #ffffff;
+$list-active: rgb(238, 238, 238);
+$list-hover: rgb(221, 216, 216);

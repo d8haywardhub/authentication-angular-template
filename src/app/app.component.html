@@ -1,0 +1,30 @@
+<h2>Authentication Template</h2>
+
+<header>
+  <app-navbar></app-navbar>
+</header>
+
+<main>
+  <div class="container-fluid">
+    <div class="row justify-content-center main-area-scrollable">
+      <div class="col-12     ">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container-fluid">
+    <div class="row pt-3 justify-content-around">
+      <div class="col-6 text-left">
+        Developed by d8hayward inc. All Rights Reserved © 2019-{{currentYear}}
+      </div>
+      <div class="col-6 text-right">
+        Terms of Use | Privacy Policy
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!--<app-busy-loading></app-busy-loading>-->

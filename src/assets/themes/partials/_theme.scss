@@ -1,0 +1,48 @@
+// ----------------------------------------------------------------------------------------------------------------------------------------------------
+// Theme definition. Include this within components that require theme variables like color.
+// ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+@import '~@angular/material/theming';
+@import 'palette';
+@import 'variables';
+@import 'scaffolding';
+
+// Use the following if no foreground customization is required
+//
+// $patty-theme: mat-light-theme($patty-theme-primary, $patty-theme-accent, $patty-theme-warn);
+
+
+// Foreground colour customization
+// https://stackoverflow.com/questions/43438305/how-to-change-font-color-of-primary-palette-in-angular-material2
+// Foreground colour theme creation function. For text colour requirement ( #3c4459   black-ish )
+// NOTE: To prevent the following error:
+//        "error Argument $color` of opacity($color) must be a color`"
+//        All proerties (such as and including base, text and slider-min) must be returned !
+@function patty-theme-foreground($color) {
+  @return (
+      base:              $color,
+      divider:           $black-12-opacity,
+      dividers:          $black-12-opacity,
+      disabled:          rgba($text-colour, 0.38),  //rgba($color, 0.38),
+      disabled-button:   rgba($text-colour, 0.38),  //rgba($color, 0.38),
+      disabled-text:     rgba($text-colour, 0.38),  //rgba($color, 0.38),
+      hint-text:         rgba($text-colour, 0.38),  //rgba($color, 0.38),
+      secondary-text:    rgba($text-colour, 0.94),  //rgba($color, 0.54),
+      icon:              rgba($color, 0.54),
+      icons:             rgba($color, 0.54),
+      text:              rgba($text-colour, 0.87),  //rgba($color, 0.87),
+      slider-off:        rgba($color, 0.26),
+      slider-off-active: rgba($color, 0.38),
+      slider-min:        rgba($color, 0.38),
+  );
+};
+
+// Create the foreground using the definition
+$patty-foreground: patty-theme-foreground(mat-color($patty-theme-primary, 700));
+
+// create theme using prime, accent and warn themes.
+$patty-theme-temp: mat-light-theme($patty-theme-primary, $patty-theme-accent, $patty-theme-warn);
+
+// merge foreground colour theme into patty-theme
+// Note must use a temp variable as maps are immutable (returns instance of)
+$patty-theme: map-merge($patty-theme-temp, (foreground: $patty-foreground));
