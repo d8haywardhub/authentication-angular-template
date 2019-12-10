@@ -11,9 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   private unsubscribe = new Subject();
-  public isRoot: boolean = true;
-  public curUser: string = "";
-  //public isAdmin: boolean = true;
+  //public isRoot: boolean = true;
+  //public curUser: string = "";
 
   currentUser$: Observable<User>;
   
@@ -30,7 +29,7 @@ export class NavbarComponent implements OnInit {
   }
 
   isLoggedIn() {
-    return this.authStore.currentUser.jwt !== "";
+    return this.authStore.isLoggedIn();
   }
 
   login() {

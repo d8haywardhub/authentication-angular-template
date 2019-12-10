@@ -24,11 +24,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     debugger;
-    this.authStore.initUser();
+    //this.authStore.initUser();
     this.currentUser$ = this.authStore.currentUser$
   
     this.loginForm = this.fb.group({
-      email: ['d8hayward@gmail.com', [  Validators.required,
+      email: ['', [  Validators.required,
                             Validators.minLength(8), 
                             //ForbiddenNameValidator(/lr@vu.com/)
                           ]

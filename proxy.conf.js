@@ -1,7 +1,8 @@
   const PROXY_CONFIG = [
     {
       "context": [
-        "/auth/login"
+        "/auth/login",
+        "/auth/register"
       ],
       "target": "http://localhost:3001",
       "secure": false
