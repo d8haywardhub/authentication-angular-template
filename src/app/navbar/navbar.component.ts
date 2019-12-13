@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, throwError as observableThrowError } from 'rxjs';
 import { AuthStoreService } from '../authentication/store/auth-store.service';
 import { User } from '../authentication/models';
 import { Router } from '@angular/router';
 
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 //import { throwError as observableThrowError, BehaviorSubject, of } from 'rxjs';
 import { catchError, tap, takeUntil } from 'rxjs/operators';
 
@@ -82,9 +82,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
           },
           (err) => { console.log("ERROR /customers:", err); },
           () => { console.log("... DONE /customers") },
-        )//,
-        //catchError(this.handleError)
+        ),
+        catchError(this.handleError)
       )
     ;
   }
+
+  private handleError(error: HttpErrorResponse): Observable<any> {
+    console.error("... AuthService handleError ...");
+    console.error(error);
+
+    // Return an Observable Error with a user-facing error message
+    // TODO: Re-test after v5-to-v6 migration
+    return observableThrowError(new Error("Something bad happened. Please try again later."));
+  }
+  
 }

@@ -25,7 +25,7 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
             */
             const cloned = req.clone({
                 headers: req.headers.set("Authorization",
-                    serverKey)
+                    ""+serverKey)
             });
 
             return next.handle(cloned);
