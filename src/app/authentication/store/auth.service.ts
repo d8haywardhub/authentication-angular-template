@@ -53,7 +53,8 @@ export class AuthService {
           // response example: {"user":{"email":"name@gmail.com"},"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhetc."}
           (resp: any) => {
             console.log("SUCESS /api/user/signup:", resp);
-            this.authStoreService.changeState(resp.user, resp.token);
+            //this.authStoreService.changeState(resp.user, resp.token);
+            this.authStoreService.changeState(resp.user, resp.serverKey);
             //this.authStoreService.changeToken(resp.token);
           },
           (err) => { console.log("ERROR /api/signup:", err); },
@@ -75,7 +76,8 @@ export class AuthService {
         tap(
           (user: any) => {
             console.log("SUCCESS /api/user/login:", user);
-            this.authStoreService.changeState(user.user, user.token);
+            //this.authStoreService.changeState(user.user, user.token);
+            this.authStoreService.changeState(user.user, user.serverKey);
             //this.authStoreService.changeToken(user.token);
             const blah = this.authStoreService.getState();
 

@@ -14,12 +14,18 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
               next: HttpHandler): Observable<HttpEvent<any>> {
     debugger;
         //const idToken = localStorage.getItem("id_token");
-        const idToken = this.authStoreService.getToken();
+        const serverKey = this.authStoreService.getServerKey();
 
-        if (idToken) {
+        if (serverKey) {
+            /*
             const cloned = req.clone({
                 headers: req.headers.set("Authorization",
                     "Bearer " + idToken)
+            });
+            */
+            const cloned = req.clone({
+                headers: req.headers.set("Authorization",
+                    serverKey)
             });
 
             return next.handle(cloned);

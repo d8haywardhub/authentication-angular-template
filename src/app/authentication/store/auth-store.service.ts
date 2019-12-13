@@ -38,21 +38,15 @@ export class AuthStoreService {
   }
 
   /*
-  initUser() {
-    let initUser: User = {
-      "email": "",
-      "password": "",
-      "jwt": "",
-      "name": "",
-      "role": ""
-    }
-    this.currentUser = initUser;
-  }
-  */
-
   changeState(newState: User, jwt: string) {
     debugger;
     const changedState = { ...newState, "jwt": jwt};
+    this.currentUser = changedState;
+  }
+  */
+  changeState(newState: User, serverKey: string) {
+    debugger;
+    const changedState = { ...newState, "serverKey": serverKey};
     this.currentUser = changedState;
   }
 
@@ -60,8 +54,9 @@ export class AuthStoreService {
     return this.currentUser;
   }
 
-  getToken() :string {
-    return this.currentUser ? this.currentUser.jwt : "";
+  getServerKey() :string {
+    //return this.currentUser ? this.currentUser.jwt : "";
+    return this.currentUser ? this.currentUser.serverKey : "";
   }
 
   isAdmin(): boolean {
@@ -69,7 +64,8 @@ export class AuthStoreService {
   }
 
   isLoggedIn(): boolean {
-    return this.currentUser && this.currentUser.jwt !== "";
+    //return this.currentUser && this.currentUser.jwt !== "";
+    return this.currentUser && this.currentUser.serverKey !== "";
   }
   
 }

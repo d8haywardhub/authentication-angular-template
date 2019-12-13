@@ -2,7 +2,8 @@
     {
       "context": [
         "/auth/login",
-        "/auth/register"
+        "/auth/register",
+        "/customers"
       ],
       "target": "http://localhost:3001",
       "secure": false
