@@ -23,8 +23,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    debugger;
-    //this.authStore.initUser();
     this.currentUser$ = this.authStore.currentUser$
   
     this.loginForm = this.fb.group({
@@ -85,7 +83,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   
   onSubmit() {
-    debugger;
     console.log(this.loginForm.value);
     if (!!this.register.value) {
       this.authService.signup(this.loginForm.value)

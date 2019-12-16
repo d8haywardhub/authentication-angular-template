@@ -3,6 +3,7 @@
       "context": [
         "/auth/login",
         "/auth/register",
+        "/auth/logout",
         "/customers"
       ],
       "target": "http://localhost:3001",

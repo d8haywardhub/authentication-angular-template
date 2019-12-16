@@ -1,5 +1,9 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
+
+      <!--<div *ngIf="currentUser$ | async; let currentUser">-->
+
+
       <div class="col-2 logo-col">
         <img src="assets/images/vu.png" class="d-block">
       </div>
@@ -13,8 +17,8 @@
   
       <div class="col-2 text-right admin-col">
         <!--<div *ngIf="isAdmin">-->
-        <div *ngIf="isAdmin() && currentUser$ | async; let currentUser">
-  
+        <!--<div *ngIf="isAdmin() && currentUser$ | async; let currentUser">-->
+          <div *ngIf="isAdmin()">
           <button mat-button
                   [matMenuTriggerFor]="administration"
                   (mouseenter)="buttonEnter(trigger)"
@@ -38,9 +42,9 @@
   
       <div class="col-1 text-center">|</div>
   
-      <div class="col-1 text-left userprofile-col">
-        <button mat-button routerLink="/userprofile">{{curUser}}</button>
-      </div>
+      <!--<div class="col-1 text-left userprofile-col">
+        <button mat-button routerLink="/userprofile">{{currentUser.name}}</button>
+      </div>-->
   
       <div *ngIf="isLoggedIn()" class="col-1 logout-col">
         <button mat-button (click)="logout()">LOG OUT</button>
@@ -56,6 +60,7 @@
         <div class="col-1 logout-col">
             <button mat-button (click)="testAuthentication()">Test Authenticated</button>
         </div>
+        <!--</div>-->
     </mat-toolbar-row>
   
   </mat-toolbar>

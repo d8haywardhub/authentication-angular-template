@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 //import { throwError as observableThrowError, BehaviorSubject, of } from 'rxjs';
 import { catchError, tap, takeUntil } from 'rxjs/operators';
+import { AuthService } from '../authentication/store/auth.service';
 
 
 
@@ -21,12 +22,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   currentUser$: Observable<User>;
   
-  constructor(private router: Router, private authStore: AuthStoreService,                      private http: HttpClient ) { }
+  constructor(private router: Router, private authStore: AuthStoreService, private authService: AuthService,                      private http: HttpClient ) { }
 
   ngOnInit() {
-    debugger;
     this.currentUser$ = this.authStore.currentUser$
-    //this.isAdmin = this.authStore.isAdmin();
   }
 
   ngOnDestroy() {
@@ -43,21 +42,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    //this.authStore.currentUser = null;
     this.router.navigate(["/login"]);
   }
 
   register() {
     //this.authStore.currentUser = null;
+    this.router.navigate(["/login"]);
   }
 
   logout() {
-    this.authStore.currentUser = null;
+    this.authService.logout(this.authStore.currentUser)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        response => {
+          this.authStore.currentUser = null;
+          console.log('Success!', response)
+        },
+        error => console.error('Error!', error)
+      );
   }
 
+
+
+
+  // Testing only .....
+  // ------------------------------------------------------
   testAuthentication() {
-
-
     this.testAuthRequest()
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(
@@ -67,12 +77,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   }
 
-
   testAuthRequest(): Observable<any> {
-    
-    console.log("POST: /api/user/login ...");
-
-    debugger;
+    console.log("GET: /customers ...");
     return this.http
       .get("/customers")
       .pipe(
@@ -93,7 +99,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     console.error(error);
 
     // Return an Observable Error with a user-facing error message
-    // TODO: Re-test after v5-to-v6 migration
     return observableThrowError(new Error("Something bad happened. Please try again later."));
   }
   

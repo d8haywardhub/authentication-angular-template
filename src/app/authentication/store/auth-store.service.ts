@@ -17,11 +17,14 @@ export class AuthStoreService {
 
   // the getter will return the last value emitted...
   get currentUser(): User {
-    //debugger;
     let user = this._currentUser$.getValue();
+    //console.log("get currentUser: ")
+    //console.log(user);
     if (user === null) {
       // get userIfo from session storage
-      let userInfo = sessionStorage.getItem("userInfo");
+      //let userInfo = sessionStorage.getItem("userInfo");
+      // get userInfo from local storage ..... allows for using different browser tabs !!
+      let userInfo = localStorage.getItem("userInfo");
       user = (userInfo) ? JSON.parse(userInfo) : null;
       // update the current user to those subscribing
       this._currentUser$.next(user);
@@ -31,21 +34,19 @@ export class AuthStoreService {
 
   // setter sends out new state to our subscribers
   set currentUser(user: User) {
-    debugger;
+    console.log("set currentUser: ");
+    console.log(user);
     // Update userInfo session storage 
-    user ? sessionStorage.setItem("userInfo", JSON.stringify(user)) : sessionStorage.removeItem("userInfo");
+    //user ? sessionStorage.setItem("userInfo", JSON.stringify(user)) : sessionStorage.removeItem("userInfo");
+    // Update userInfo local storage ..... allows for using different browser tabs !!
+    user ? localStorage.setItem("userInfo", JSON.stringify(user)) : localStorage.removeItem("userInfo");
     this._currentUser$.next(user);
+    let nextUser = this._currentUser$.getValue();
+    console.log("set currentUser after setting: ");
+    console.log(nextUser);
   }
 
-  /*
-  changeState(newState: User, jwt: string) {
-    debugger;
-    const changedState = { ...newState, "jwt": jwt};
-    this.currentUser = changedState;
-  }
-  */
   changeState(newState: User, serverKey: string) {
-    debugger;
     const changedState = { ...newState, "serverKey": serverKey};
     this.currentUser = changedState;
   }
@@ -55,7 +56,6 @@ export class AuthStoreService {
   }
 
   getServerKey() :string {
-    //return this.currentUser ? this.currentUser.jwt : "";
     return this.currentUser ? this.currentUser.serverKey : "";
   }
 
@@ -64,7 +64,6 @@ export class AuthStoreService {
   }
 
   isLoggedIn(): boolean {
-    //return this.currentUser && this.currentUser.jwt !== "";
     return this.currentUser && this.currentUser.serverKey !== "";
   }
   
