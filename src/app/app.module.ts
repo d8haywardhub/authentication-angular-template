@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { JwtAuthenticationInterceptor } from './interceptors';
 
@@ -19,11 +20,12 @@ import { AppMaterialModule } from './app-material.module';
   ],
   imports: [
     BrowserModule,
+    //NgbModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AppMaterialModule,
     HttpClientModule, // So that we can use @angular/common/http/HttpClient
-    FormsModule,
+    FormsModule
   ],
   providers: [
     // Interceptors

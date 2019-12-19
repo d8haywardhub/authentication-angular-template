@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Subject, Observable, throwError as observableThrowError } from 'rxjs';
 import { AuthStoreService } from '../authentication/store/auth-store.service';
 import { User } from '../authentication/models';
@@ -9,6 +9,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 //import { throwError as observableThrowError, BehaviorSubject, of } from 'rxjs';
 import { catchError, tap, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../authentication/store/auth.service';
+import { MatMenuTrigger, MatButton } from '@angular/material';
 
 
 
@@ -21,11 +22,28 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
 
   currentUser$: Observable<User>;
+
+  // Administration dropdown menu mouse enter and leave event handling
+  // https://stackoverflow.com/questions/53618333/how-to-open-and-close-angular-mat-menu-on-hover
+  // requires
+  private enteredButton: boolean = false;
+  private isMatMenuOpen: boolean = false;
+  private prevButtonTrigger: MatMenuTrigger;
   
-  constructor(private router: Router, private authStore: AuthStoreService, private authService: AuthService,                      private http: HttpClient ) { }
+  constructor(
+    private router: Router, 
+    private authStore: AuthStoreService, 
+    private authService: AuthService,
+    private http: HttpClient,
+    private renderer: Renderer2
+  ) { }
 
   ngOnInit() {
     this.currentUser$ = this.authStore.currentUser$
+    //const curU = this.authStore.currentUser;
+    console.log("onInit currentUser...");
+    console.log(this.authStore.currentUser);
+    //this.router.navigate(["/login"]);
   }
 
   ngOnDestroy() {
@@ -56,11 +74,72 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.authStore.currentUser = null;
-          console.log('Success!', response)
+          this.router.navigate(["/login"]);
         },
-        error => console.error('Error!', error)
+        error => {
+          this.authStore.currentUser = null;
+          console.error('Error!', error);
+        }
       );
   }
+
+  // Dropdown menu custom sh
+    // Administration dropdown menu mouse enter and leave event handling
+  // https://stackoverflow.com/questions/53618333/how-to-open-and-close-angular-mat-menu-on-hover
+  buttonEnter(trigger: MatMenuTrigger) {
+    setTimeout(() => {
+      if(this.prevButtonTrigger && this.prevButtonTrigger != trigger){
+        this.prevButtonTrigger.closeMenu();
+        this.prevButtonTrigger = trigger;
+        this.isMatMenuOpen = false;
+        trigger.openMenu()
+      }
+      else if (!this.isMatMenuOpen) {
+        this.enteredButton = true;
+        this.prevButtonTrigger = trigger
+        trigger.openMenu()
+      }
+      else {
+        this.enteredButton = true;
+        this.prevButtonTrigger = trigger
+      }
+    })
+  }
+
+  buttonLeave(trigger: MatMenuTrigger, button: MatButton) {
+    setTimeout(() => {
+      if (this.enteredButton && !this.isMatMenuOpen) {
+        trigger.closeMenu();
+        this.renderer.removeClass(button['_elementRef'].nativeElement, 'cdk-focused');
+        this.renderer.removeClass(button['_elementRef'].nativeElement, 'cdk-program-focused');
+      } if (!this.isMatMenuOpen) {
+        trigger.closeMenu();
+        this.renderer.removeClass(button['_elementRef'].nativeElement, 'cdk-focused');
+        this.renderer.removeClass(button['_elementRef'].nativeElement, 'cdk-program-focused');
+      } else {
+        this.enteredButton = false;
+      }
+    }, 100)
+  }
+
+  menuEnter() {
+    this.isMatMenuOpen = true;
+  }
+
+  menuLeave(trigger: MatMenuTrigger, button: MatButton) {
+    setTimeout(() => {
+      if (!this.enteredButton) {
+        this.isMatMenuOpen = false;
+        trigger.closeMenu();
+        this.renderer.removeClass(button['_elementRef'].nativeElement, 'cdk-focused');
+        this.renderer.removeClass(button['_elementRef'].nativeElement, 'cdk-program-focused');
+      } else {
+        this.isMatMenuOpen = false;
+      }
+    }, 80)
+  }
+
+
 
 
 

@@ -1,0 +1,31 @@
+@import 'src/assets/themes/partials/theme';
+
+mat-toolbar-row {
+  line-height: 64px;
+}
+
+.logo-col {
+  min-width: 160px;
+}
+.empty-navigation-col {
+  min-width: 160px;
+  width: 100%;
+  height: 100%;
+}
+
+.assessment-col {
+  min-width: 130px;
+  padding: 0;
+}
+
+.admin-col {
+  min-width: 260px;
+}
+
+.userprofile-col {
+  min-width: 130px;
+}
+
+.logout-col {
+  min-width: 130px;
+}

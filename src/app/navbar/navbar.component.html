@@ -1,67 +1,90 @@
+<div *ngIf="currentUser$ | async as currentUser; else loading">
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+  <mat-toolbar-row>
 
-      <!--<div *ngIf="currentUser$ | async; let currentUser">-->
-
-
+      <div class="col-1">
+        <h2>VU</h2>
+      </div>
       <div class="col-2 logo-col">
         <img src="assets/images/vu.png" class="d-block">
       </div>
-  
-      <div class="col-1 assessment-col text-center">
-        <button mat-button routerLink="/login" >PL</button>
+      <div class="col-1">
+        <button mat-button (click)="testAuthentication()">Authenticated?</button>
       </div>
-  
-      <!-- This fills the remaining space of the current row -->
-      <!-- not needed now ..... left in for future reference    <span class="fill-remaining-space"></span> -->
-  
+
+
       <div class="col-2 text-right admin-col">
-        <!--<div *ngIf="isAdmin">-->
-        <!--<div *ngIf="isAdmin() && currentUser$ | async; let currentUser">-->
-          <div *ngIf="isAdmin()">
-          <button mat-button
-                  [matMenuTriggerFor]="administration"
-                  (mouseenter)="buttonEnter(trigger)"
-                  (mouseleave)="buttonLeave(trigger, button)"
-                  #button
-                  #trigger="matMenuTrigger"
-                  style="z-index:1050"
-          >
-            ADMINISTRATION
-            <mat-icon class="fas fa-caret-down" ></mat-icon>
-          </button>
-          <mat-menu #administration="matMenu" direction="down" yPosition="below" [overlapTrigger]="false">
-            <span (mouseenter)="menuEnter()" (mouseleave)="menuLeave(trigger, button)">
-              <button mat-menu-item routerLink="/login">User</button>
-              <button mat-menu-item routerLink="/login">Client</button>
-            </span>
-          </mat-menu>
-  
-        </div>
+        <div *ngIf="isAdmin()">
+
+        <button mat-button
+                [matMenuTriggerFor]="administration"
+                (mouseenter)="buttonEnter(trigger)"
+                (mouseleave)="buttonLeave(trigger, button)"
+                #button
+                #trigger="matMenuTrigger"
+                style="z-index:1050"
+        >
+          ADMINISTRATION
+          <mat-icon class="fas fa-caret-down" ></mat-icon>
+        </button>
+        <mat-menu #administration="matMenu" direction="down" yPosition="below" [overlapTrigger]="false">
+          <span (mouseenter)="menuEnter()" (mouseleave)="menuLeave(trigger, button)">
+            <button mat-menu-item routerLink="/login">User</button>
+            <button mat-menu-item routerLink="/login">Client</button>
+          </span>
+        </mat-menu>
+
       </div>
-  
-      <div class="col-1 text-center">|</div>
-  
-      <!--<div class="col-1 text-left userprofile-col">
-        <button mat-button routerLink="/userprofile">{{currentUser.name}}</button>
-      </div>-->
-  
-      <div *ngIf="isLoggedIn()" class="col-1 logout-col">
-        <button mat-button (click)="logout()">LOG OUT</button>
+    </div>
+
+    <div class="col-1 text-center">|</div>
+
+
+    <div class="col-3"></div>
+    <div class="col-2 logout-col">
+      <div *ngIf="isLoggedIn() && currentUser$ | async; let currentUser">
+            <button mat-button (click)="logout()">LOG OUT</button>
+            {{currentUser.name}}
       </div>
-      <div *ngIf="!isLoggedIn()" class="col-1 logout-col">
+
+      <div *ngIf="!isLoggedIn()">
           <button mat-button (click)="login()">LOG IN</button>
           <button mat-button (click)="register()">REGISTER</button>
-          <!--
+                    <!--
           <a routerLink="/login" routerLinkActive="active">Login</a>
           <a class="btn btn-primary btn-lg" [routerLink]="['login']" role="button">Login</a>
           -->
-        </div>
-        <div class="col-1 logout-col">
-            <button mat-button (click)="testAuthentication()">Test Authenticated</button>
-        </div>
-        <!--</div>-->
+      </div>
+    </div>
+
+
+
+
+
     </mat-toolbar-row>
-  
+</mat-toolbar>
+</div>
+<ng-template #loading>
+  <!--<div class="col-12"><button mat-button (click)="login()"><h2>Please login</h2></button></div>-->
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <div class="col-1">
+        <h2>VU</h2>
+      </div>
+      <div class="col-2 logo-col">
+        <img src="assets/images/vu.png" class="d-block">
+      </div>
+      <div class="col-1">
+        <button mat-button (click)="testAuthentication()">Authenticated?</button>
+      </div>
+      <div class="col-6 text-center">|</div>
+      <div class="col-2 logout-col">
+        <div *ngIf="!isLoggedIn()">
+            <button mat-button (click)="login()">LOG IN</button>
+            <button mat-button (click)="register()">REGISTER</button>
+        </div>
+      </div>
+      </mat-toolbar-row>
   </mat-toolbar>
-  
+
+</ng-template>

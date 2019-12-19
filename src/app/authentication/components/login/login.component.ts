@@ -7,6 +7,7 @@ import { tap, takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../store/auth.service';
 import { AuthStoreService } from '../../store/auth-store.service';
 import { User } from '../../models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   currentUser$: Observable<User>;
 
-  constructor(private fb: FormBuilder, private authStore: AuthStoreService, private authService: AuthService) { }
+  constructor(private router: Router, private fb: FormBuilder, private authStore: AuthStoreService, private authService: AuthService) { }
 
   ngOnInit() {
 
@@ -95,7 +96,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authService.login(this.loginForm.value)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        response => console.log('Success!', response),
+        response => {
+          console.log('Success!', response);
+          this.router.navigate(["/"]);
+        },
         error => console.error('Error!', error)
       );
     }
